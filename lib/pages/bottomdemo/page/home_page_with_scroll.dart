@@ -20,8 +20,8 @@ class HomePageScroll extends StatefulWidget {
 class _HomePageScrollState extends State<HomePageScroll> {
   final  titleStr="PageView实现，可滚动";
   final  photoStr="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554821553942&di=6be93e131cedb5036c92c065cc873d2d&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F61%2F50%2F586e242f0a3d8_610.jpg";
-  int _tabIndex=0;
-  var _pageController = new PageController(initialPage: 0);
+  int _tabIndex;
+  var _pageController;
   final pages=<Widget>[
     new Tab1Page(key:Key("1"),centerText: "1",color: Colors.red),
     new Tab1Page(key:Key("2"),centerText: "2",color: Colors.amber),
@@ -34,8 +34,8 @@ class _HomePageScrollState extends State<HomePageScroll> {
   @override
   void initState() {
     super.initState();
-    _tabIndex=0;
-
+    this._tabIndex=0;
+    this._pageController=new PageController(initialPage:_tabIndex );
   }
 
   @override
@@ -47,27 +47,6 @@ class _HomePageScrollState extends State<HomePageScroll> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(titleStr),
-        //左上角的得图标
-        leading: Image(image: NetworkImage(photoStr,scale: 0.05)),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.add),onPressed:_pressLeft
-          )
-          ,
-          IconButton(icon: Icon(Icons.account_balance_wallet),onPressed: (){
-            print("点击第二按钮");
-
-          }
-          )
-          ,
-          IconButton(icon: Icon(Icons.ac_unit),onPressed: (){
-            print("点击第三按钮");
-          },)
-        ],
-      ),
       //方案一Stack+Offstage
       body:PageView(
         controller: _pageController,
@@ -92,8 +71,9 @@ class _HomePageScrollState extends State<HomePageScroll> {
 
   void _tapTab(int value) {
       setState(() {
-        _tabIndex=value;
+        this._tabIndex=value;
       });
+      _pageController.jumpToPage(value);
   }
 
   //控制页面切换的方法

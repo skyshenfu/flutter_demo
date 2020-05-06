@@ -3,6 +3,7 @@ import 'package:flutterallinone/index_page.dart';
 import 'package:flutterallinone/pages/bottomdemo/page/home_page_stack.dart';
 import 'package:flutterallinone/pages/bottomdemo/page/home_page_index_stack.dart';
 import 'package:flutterallinone/pages/bottomdemo/page/home_page_with_scroll.dart';
+import 'package:flutterallinone/pages/splash/splash.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
-      home: IndexPage(),
+      home: SplashPage(),
     );
   }
 }
