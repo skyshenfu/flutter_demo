@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterallinone/pages/bottomdemo/page/leader_page.dart';
 import 'package:flutterallinone/pages/bottomdemo/simpleTab/tab_stateful_page.dart';
 ///方案三 PageView实现，可滚动需要对Tab进行mixin
 class HomePageScroll extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HomePageScrollState extends State<HomePageScroll> {
   int _tabIndex;
   var _pageController;
   final pages=<Widget>[
-    new Tab1Page(key:Key("1"),centerText: "1",color: Colors.red),
+    new LeaderPageWidget(),
     new Tab1Page(key:Key("2"),centerText: "2",color: Colors.amber),
     new Tab1Page(key:Key("3"),centerText: "3",color: Colors.deepPurpleAccent)
   ];
@@ -61,7 +62,7 @@ class _HomePageScrollState extends State<HomePageScroll> {
       ]
       ,
         //tab选中颜色
-        fixedColor: Colors.red,
+        fixedColor: Colors.lightBlue,
         onTap:_tapTab ,
         currentIndex: _tabIndex,
         selectedFontSize: 12.0,
