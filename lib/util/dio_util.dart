@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -29,7 +30,9 @@ class DioUtil {
   }
 
   //一个get请求
-  Future<dynamic> getRequest(String path,{
+  void getRequest (String path,{
+    Function successCallBack,
+    Function errorCallBack,
     Map<String, dynamic> parameters,
     CancelToken cancelToken,
     ProgressCallback onReceiveProgress,
@@ -37,10 +40,17 @@ class DioUtil {
   }) async {
     try{
       Response response = await _dio.get(path,queryParameters: parameters, cancelToken: cancelToken,onReceiveProgress: onReceiveProgress,options: options);
-      return processData(RawResponse.fromJson(response.data));
-     
+      LinkedHashMap linkedHashMap=response.data;
+      int code=linkedHashMap['errorCode'];
+      String msg=linkedHashMap['errorMsg'];
+
+      if(code==0){
+        successCallBack(response.data);
+      }else{
+        throw new BusinessError(code, msg);
+      }
     }catch(e){
-      return Future.error(e);
+       errorCallBack(e);
     }
 
   }
@@ -48,7 +58,7 @@ class DioUtil {
 
   dynamic processData(RawResponse result) {
     if(result.errorCode==0){
-      return result.data;
+      //return result.data;
     }else{
       throw BusinessError(result.errorCode,result.errorMsg);
     }

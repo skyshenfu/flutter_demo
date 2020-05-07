@@ -52,13 +52,16 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget> {
   }
   void _requestData() {
     
-    DioUtil.getInstance().getRequest(Api.BANNER,cancelToken: cancelToken).then(_printV);
+    DioUtil.getInstance().getRequest(Api.BANNER,cancelToken: cancelToken,successCallBack:_printV,errorCallBack: error1);
+  }
+
+  error1(e){
+  print("");
   }
 
   void _printV(dynamic v) {
-    List<dynamic> data=v;
-    List<SingleBanner> temp=data;
-    print(v);
+    BannerResponse data =BannerResponse.fromJson(v);
+    print("");
 
   }
 }
