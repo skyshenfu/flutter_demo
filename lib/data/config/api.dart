@@ -1,5 +1,5 @@
 class Api{
-  static var baseUrl="https://www1.wanandroid.com";
+  static var baseUrl="https://www.wanandroid.com";
   static const BANNER="/banner/json";
 
 }

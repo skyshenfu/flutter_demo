@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterallinone/pages/bottomdemo/page/home_page_with_scroll.dart';
+import 'package:flutterallinone/pages/host_page.dart';
 class SplashPage extends StatefulWidget{
   @override
   _SplashPageState createState() =>new _SplashPageState();

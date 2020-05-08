@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterallinone/index_page.dart';
-import 'package:flutterallinone/pages/bottomdemo/page/home_page_stack.dart';
-import 'package:flutterallinone/pages/bottomdemo/page/home_page_index_stack.dart';
-import 'package:flutterallinone/pages/bottomdemo/page/home_page_with_scroll.dart';
-import 'package:flutterallinone/pages/splash/splash.dart';
+import 'package:flutterallinone/pages/splash.dart';
 
 void main() => runApp(MyApp());
 

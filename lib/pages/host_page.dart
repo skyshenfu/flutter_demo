@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterallinone/pages/bottomdemo/page/leader_page.dart';
-import 'package:flutterallinone/pages/bottomdemo/simpleTab/tab_stateful_page.dart';
+import 'package:flutterallinone/pages/leader_page.dart';
+
 ///方案三 PageView实现，可滚动需要对Tab进行mixin
 class HomePageScroll extends StatefulWidget {
   HomePageScroll({Key key}) : super(key: key);
@@ -19,24 +19,23 @@ class HomePageScroll extends StatefulWidget {
 }
 
 class _HomePageScrollState extends State<HomePageScroll> {
-  final  titleStr="PageView实现，可滚动";
-  final  photoStr="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554821553942&di=6be93e131cedb5036c92c065cc873d2d&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F61%2F50%2F586e242f0a3d8_610.jpg";
+  final titleStr = "PageView实现，可滚动";
   int _tabIndex;
   var _pageController;
-  final pages=<Widget>[
+  final pages = <Widget>[
     new LeaderPageWidget(),
-    new Tab1Page(key:Key("2"),centerText: "2",color: Colors.amber),
-    new Tab1Page(key:Key("3"),centerText: "3",color: Colors.deepPurpleAccent)
+    new LeaderPageWidget(),
+    new LeaderPageWidget()
   ];
-  void _pressLeft(){
+  void _pressLeft() {
     print("点击第一按钮");
   }
 
   @override
   void initState() {
     super.initState();
-    this._tabIndex=0;
-    this._pageController=new PageController(initialPage:_tabIndex );
+    this._tabIndex = 0;
+    this._pageController = new PageController(initialPage: _tabIndex);
   }
 
   @override
@@ -49,21 +48,22 @@ class _HomePageScrollState extends State<HomePageScroll> {
     // than having to individually change instances of widgets.
     return Scaffold(
       //方案一Stack+Offstage
-      body:PageView(
+      body: PageView(
         controller: _pageController,
         children: pages,
         onPageChanged: _pageChangeMethod,
       ), // This trailing comma makes auto-formatting nicer for build methods.
-      bottomNavigationBar: BottomNavigationBar(items:<BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.adb),title: Text("tab1")),
-        BottomNavigationBarItem(icon: Icon(Icons.add_a_photo),title: Text("tab2")),
-        BottomNavigationBarItem(icon: Icon(Icons.description),title: Text("tab3"))
-
-      ]
-      ,
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.adb), title: Text("tab1")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_a_photo), title: Text("tab2")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.description), title: Text("tab3"))
+        ],
         //tab选中颜色
         fixedColor: Colors.lightBlue,
-        onTap:_tapTab ,
+        onTap: _tapTab,
         currentIndex: _tabIndex,
         selectedFontSize: 12.0,
       ),
@@ -71,17 +71,17 @@ class _HomePageScrollState extends State<HomePageScroll> {
   }
 
   void _tapTab(int value) {
-      setState(() {
-        this._tabIndex=value;
-      });
-      _pageController.jumpToPage(value);
+    setState(() {
+      this._tabIndex = value;
+    });
+    _pageController.jumpToPage(value);
   }
 
   //控制页面切换的方法
 
   void _pageChangeMethod(int value) {
     setState(() {
-      this._tabIndex=value;
+      this._tabIndex = value;
     });
   }
 }

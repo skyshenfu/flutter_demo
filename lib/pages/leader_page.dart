@@ -7,6 +7,7 @@ import 'package:flutterallinone/data/config/api.dart';
 import 'package:flutterallinone/data/config/response_raw.dart';
 import 'package:flutterallinone/data/model/pojos.dart';
 import 'package:flutterallinone/util/dio_util.dart';
+import 'package:flutterallinone/widget/banner.dart';
 
 class LeaderPageWidget extends StatefulWidget {
   @override
@@ -17,22 +18,28 @@ class LeaderPageWidget extends StatefulWidget {
 
 }
 
-class _LeaderPageWidgetState extends State<LeaderPageWidget> {
+class _LeaderPageWidgetState extends State<LeaderPageWidget> with AutomaticKeepAliveClientMixin<LeaderPageWidget> {
   CancelToken cancelToken;
+  List<SingleBanner> banners;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    banners=new List();
     cancelToken=CancelToken();
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     // TODO: implement build
     return Scaffold(
         backgroundColor: Colors.blueAccent,
         body: SafeArea(
           child: Column(
             children: <Widget>[
+              BannerWidget(
+                banners: banners,
+              ),
               GestureDetector(
                   onTap: _requestData,
                   child: Text(
@@ -61,7 +68,13 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget> {
 
   void _printV(dynamic v) {
     BannerResponse data =BannerResponse.fromJson(v);
-    print("");
+    setState(() {
+      this.banners=data.data;
+    });
 
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
