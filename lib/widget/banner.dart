@@ -5,13 +5,36 @@ import 'package:flutterallinone/data/model/pojos.dart';
 
 import 'indicator_painter.dart';
 
-class BannerWidget extends StatelessWidget {
-  final List<SingleBanner> banners;
-  final _pageController = PageController();
-  int _currentPage=0;
+class BannerWidget extends StatefulWidget {
+  final banners;
 
   BannerWidget({Key key, this.banners}) : super(key: key);
 
+
+
+
+  @override
+  _BannerWidgetState createState() {
+    // TODO: implement createState
+    return new _BannerWidgetState();
+  }
+}
+class _BannerWidgetState extends State<BannerWidget>{
+  PageController _pageController;
+  int _currentPage;
+  Timer timer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _currentPage=0;
+    _pageController = PageController();
+    timer=new Timer.periodic(new Duration(seconds: 2),(timer){
+        int jumpTarget= (_currentPage >=widget.banners.length-1 ? 0:_currentPage+1);
+      _pageController.jumpToPage(jumpTarget);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -27,7 +50,7 @@ class BannerWidget extends StatelessWidget {
 
   List<Widget> _getPages() {
     List<Widget> widgets = [];
-    banners.forEach((banner) {
+    widget.banners.forEach((banner) {
       widgets.add(_getPage(banner));
     });
     return widgets;
@@ -41,7 +64,7 @@ class BannerWidget extends StatelessWidget {
   }
 
   Widget _pageViewHolder() {
-    if (banners.isEmpty) {
+    if (widget.banners.isEmpty) {
       return Image.network(
         "https://pics7.baidu.com/feed/7aec54e736d12f2ea0a8a098c20f7464873568e8.jpeg?token=b7b46aab7eb9b86e8ed065d79de7b85c",
         fit: BoxFit.fill,
@@ -58,15 +81,11 @@ class BannerWidget extends StatelessWidget {
         ],
       );
     }
+
   }
-
-  final Timer timer = new Timer.periodic(new Duration(seconds: 2),(timer){
-
-  });
-
   List<Widget> _getIndicator(int index) {
     List<Widget> result = [];
-    int count = banners.length;
+    int count = widget.banners.length;
     for (int i = 0; i < count; i++) {
       result.add(Container(
           margin: EdgeInsets.only(left: 15,bottom: 10),
@@ -78,6 +97,17 @@ class BannerWidget extends StatelessWidget {
   }
 
   void _pageChangeMethod(int value) {
-    this._currentPage=value;
+    setState(() {
+      this._currentPage=value;
+    });
+
+  }
+  @override
+  void dispose() {
+    timer.cancel();
+    _pageController.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 }
+
