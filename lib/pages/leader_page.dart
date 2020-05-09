@@ -20,12 +20,10 @@ class LeaderPageWidget extends StatefulWidget {
 
 class _LeaderPageWidgetState extends State<LeaderPageWidget> with AutomaticKeepAliveClientMixin<LeaderPageWidget> {
   CancelToken cancelToken;
-  List<SingleBanner> banners;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    banners=new List();
     cancelToken=CancelToken();
   }
   @override
@@ -37,11 +35,15 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget> with AutomaticKeepA
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              BannerWidget(
-                banners: banners,
+
+              FutureBuilder(
+                builder: _futureBuilder,
+                future: DioUtil.getInstance().getRequestFuture(Api.BANNER,(bannerResponse){
+                  return BannerResponse.fromJson(bannerResponse);
+                }),
               ),
               GestureDetector(
-                  onTap: _requestData,
+//                  onTap: _requestData,
                   child: Text(
                 "123",
                 style: TextStyle(fontSize: 30),
@@ -57,24 +59,46 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget> with AutomaticKeepA
     super.dispose();
     
   }
-  void _requestData() {
-    
-    DioUtil.getInstance().getRequest(Api.BANNER,cancelToken: cancelToken,successCallBack:_printV,errorCallBack: error1);
-  }
+//  void _requestData() {
+//
+//    DioUtil.getInstance().getRequest(Api.BANNER,cancelToken: cancelToken,successCallBack:_printV,errorCallBack: error1);
+//  }
 
   error1(e){
   print("");
   }
 
-  void _printV(dynamic v) {
-    BannerResponse data =BannerResponse.fromJson(v);
-    setState(() {
-      this.banners=data.data;
-    });
-
-  }
+//  void _printV(dynamic v) {
+//    BannerResponse data =BannerResponse.fromJson(v);
+//    setState(() {
+//      this.banners=data.data;
+//    });
+//
+//  }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+
+  Widget _futureBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    switch(snapshot.connectionState){
+      case ConnectionState.none:
+        return Text("预备开始");
+
+      case ConnectionState.waiting:
+        return Text("加载中");
+      case ConnectionState.active:
+        return Text("激活");
+
+      case ConnectionState.done:
+        if(snapshot.hasError){
+          return Text("加载错误");
+        }else{
+          return BannerWidget(
+            banners: snapshot.data.data,
+          );
+        }
+    }
+  }
+
 }

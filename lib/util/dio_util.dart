@@ -54,6 +54,29 @@ class DioUtil {
     }
 
   }
+  //一个get请求
+  Future getRequestFuture(String path, Function successCallBack,{
+    Map<String, dynamic> parameters,
+    CancelToken cancelToken,
+    ProgressCallback onReceiveProgress,
+    Options options
+  }) async {
+    try{
+      Response response = await _dio.get(path,queryParameters: parameters, cancelToken: cancelToken,onReceiveProgress: onReceiveProgress,options: options);
+      LinkedHashMap linkedHashMap=response.data;
+      int code=linkedHashMap['errorCode'];
+      String msg=linkedHashMap['errorMsg'];
+
+      if(code==0){
+        return Future.value(successCallBack(response.data));
+      }else{
+        throw new BusinessError(code, msg);
+      }
+    }catch(e){
+      return Future.error(e);
+    }
+
+  }
 
 
   dynamic processData(RawResponse result) {

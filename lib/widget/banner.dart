@@ -30,9 +30,12 @@ class _BannerWidgetState extends State<BannerWidget>{
     super.initState();
     _currentPage=0;
     _pageController = PageController();
-    timer=new Timer.periodic(new Duration(seconds: 2),(timer){
-        int jumpTarget= (_currentPage >=widget.banners.length-1 ? 0:_currentPage+1);
-      _pageController.jumpToPage(jumpTarget);
+    timer=new Timer.periodic(new Duration(seconds: 5),(timer){
+        if(widget.banners.length>0){
+          int jumpTarget= (_currentPage >=widget.banners.length-1 ? 0:_currentPage+1);
+          _pageController.jumpToPage(jumpTarget);
+        }
+
     });
   }
   @override

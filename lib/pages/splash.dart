@@ -16,6 +16,7 @@ class _SplashPageState extends State<SplashPage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
+      backgroundColor: Colors.white,
       body: new SafeArea(
         child: Container(
           child: Center(
