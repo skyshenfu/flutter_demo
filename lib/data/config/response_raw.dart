@@ -33,3 +33,10 @@ class BannerResponse extends RawResponse {
     }
   }
 }
+class ArticleListResponse extends RawResponse{
+  PageData data;
+  ArticleListResponse(this.data);
+  ArticleListResponse.fromJson(Map<String, dynamic> json) {
+    data = PageData.fromJson(json['data']);
+  }
+}

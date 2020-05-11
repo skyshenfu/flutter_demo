@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterallinone/pages/article_holder_page.dart';
 import 'package:flutterallinone/pages/leader_page.dart';
+import 'package:flutterallinone/widget/over_scroll.dart';
 
 ///方案三 PageView实现，可滚动需要对Tab进行mixin
 class HomePageScroll extends StatefulWidget {
@@ -24,8 +26,8 @@ class _HomePageScrollState extends State<HomePageScroll> {
   var _pageController;
   final pages = <Widget>[
     new LeaderPageWidget(),
-    new LeaderPageWidget(),
-    new LeaderPageWidget()
+    Container(),
+    Container(),
   ];
   void _pressLeft() {
     print("点击第一按钮");
@@ -48,10 +50,13 @@ class _HomePageScrollState extends State<HomePageScroll> {
     // than having to individually change instances of widgets.
     return Scaffold(
       //方案一Stack+Offstage
-      body: PageView(
-        controller: _pageController,
-        children: pages,
-        onPageChanged: _pageChangeMethod,
+      body: ScrollConfiguration(
+        behavior: OverScrollBehavior(),
+        child: PageView(
+          controller: _pageController,
+          children: pages,
+          onPageChanged: _pageChangeMethod,
+        ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[

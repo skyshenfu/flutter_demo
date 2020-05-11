@@ -8,6 +8,8 @@ import 'package:flutterallinone/data/config/response_raw.dart';
 class DioUtil {
   static final _instance = DioUtil._();
   static Map<String,dynamic> _header={"token": ""};
+  static const int _post_method=1;
+  static const int _get_method=0;
 
   static  BaseOptions _baseOptions = BaseOptions(
     //基础地址
@@ -29,8 +31,10 @@ class DioUtil {
     _dio=Dio(_baseOptions);
   }
 
-  //一个get请求
-  void getRequest (String path,{
+  //简单请求，没有返回值，类似于java的回调处理
+  //默认为get形式的请求
+  void simpleRequest(String path,{
+    int requestMethod=_get_method,
     Function successCallBack,
     Function errorCallBack,
     Map<String, dynamic> parameters,
@@ -39,23 +43,32 @@ class DioUtil {
     Options options
   }) async {
     try{
-      Response response = await _dio.get(path,queryParameters: parameters, cancelToken: cancelToken,onReceiveProgress: onReceiveProgress,options: options);
+
+      Response response;
+      if(requestMethod==_post_method){
+        response=await _dio.post(path,queryParameters: parameters, cancelToken: cancelToken,onReceiveProgress: onReceiveProgress,options: options);
+      }else{
+        response= await _dio.get(path,queryParameters: parameters, cancelToken: cancelToken,onReceiveProgress: onReceiveProgress,options: options);
+      }
       LinkedHashMap linkedHashMap=response.data;
       int code=linkedHashMap['errorCode'];
       String msg=linkedHashMap['errorMsg'];
-
       if(code==0){
         successCallBack(response.data);
       }else{
         throw new BusinessError(code, msg);
       }
     }catch(e){
-       errorCallBack(e);
+      errorCallBack(e);
     }
 
   }
-  //一个get请求
-  Future getRequestFuture(String path, Function successCallBack,{
+
+
+  //网络请求，返回一个future rawDataConvert为对返回结果的加工，返回的数据为FutureBuilder state切换为done且没有error的情况
+  //默认为get形式的请求
+  Future futureRequest(String path, Function rawDataConvert,{
+    int requestMethod=_get_method,
     Map<String, dynamic> parameters,
     CancelToken cancelToken,
     ProgressCallback onReceiveProgress,
@@ -68,25 +81,15 @@ class DioUtil {
       String msg=linkedHashMap['errorMsg'];
 
       if(code==0){
-        return Future.value(successCallBack(response.data));
+        return Future.value(rawDataConvert(response.data));
       }else{
         throw new BusinessError(code, msg);
       }
     }catch(e){
       return Future.error(e);
     }
-
   }
 
-
-  dynamic processData(RawResponse result) {
-    if(result.errorCode==0){
-      //return result.data;
-    }else{
-      throw BusinessError(result.errorCode,result.errorMsg);
-    }
-  }
-  
   void refreshToken(String token){
     _header["token"]=token;
   }
