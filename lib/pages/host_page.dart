@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterallinone/pages/article_holder_page.dart';
+import 'package:flutterallinone/widget/article_holder_widget.dart';
 import 'package:flutterallinone/pages/leader_page.dart';
 import 'package:flutterallinone/widget/over_scroll.dart';
 
@@ -20,7 +20,7 @@ class HomePageScroll extends StatefulWidget {
   _HomePageScrollState createState() => _HomePageScrollState();
 }
 
-class _HomePageScrollState extends State<HomePageScroll> {
+class _HomePageScrollState extends State<HomePageScroll>   with AutomaticKeepAliveClientMixin<HomePageScroll> {
   final titleStr = "PageView实现，可滚动";
   int _tabIndex;
   var _pageController;
@@ -89,4 +89,8 @@ class _HomePageScrollState extends State<HomePageScroll> {
       this._tabIndex = value;
     });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

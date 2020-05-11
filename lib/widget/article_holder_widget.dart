@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterallinone/data/config/response_raw.dart';
 import 'package:flutterallinone/data/model/pojos.dart';
+import 'package:flutterallinone/pages/article_detail_page.dart';
 import 'package:flutterallinone/util/dio_util.dart';
 import 'package:flutterallinone/widget/over_scroll.dart';
 
@@ -56,9 +57,7 @@ class _ArticleHolderState extends State<ArticleHolderWidget>{
   }
 
   Widget _buildListData(BuildContext context, SingleArticle itemData) {
-    return GestureDetector(
-      child: Container(
-        width: double.infinity,
+      return Container(
         height: 80,
         padding: EdgeInsets.only(left: 20,right: 20),
         margin: EdgeInsets.only(left: 10,right: 10,top: 2,bottom: 2),
@@ -66,15 +65,27 @@ class _ArticleHolderState extends State<ArticleHolderWidget>{
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(2))
         ),
-        child: Align(
-            alignment: FractionalOffset(0.0,0.5),
-            child: Text(
-                itemData.title,
-                textAlign: TextAlign.left
-            )
+
+        child: GestureDetector(
+          onTap: (){
+            _tapArticle(itemData);
+          },
+          child: Align(
+              alignment: FractionalOffset(0.0,0.5),
+              child: Text(
+                  itemData.title,
+                  textAlign: TextAlign.left
+              )
+          )
         ),
-      ),
-    );
+      );
   }
 
+
+
+  void _tapArticle(SingleArticle itemData) {
+    Navigator.push(context, new MaterialPageRoute(builder: (context){
+      return  ArticleDetailPage(itemData.link);
+    }));
+  }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterallinone/data/config/api.dart';
 import 'package:flutterallinone/data/config/response_raw.dart';
-import 'package:flutterallinone/pages/article_holder_page.dart';
+import 'package:flutterallinone/widget/article_holder_widget.dart';
 import 'package:flutterallinone/util/dio_util.dart';
 import 'package:flutterallinone/widget/banner.dart';
 
