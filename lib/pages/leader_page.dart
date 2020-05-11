@@ -85,7 +85,7 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget>
         return Text("加载中");
       case ConnectionState.done:
         if (snapshot.hasError) {
-          return Text("加载错误");
+          return Text(snapshot.error.toString());
         } else {
           return BannerWidget(
             banners: snapshot.data.data,
