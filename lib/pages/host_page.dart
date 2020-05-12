@@ -3,6 +3,8 @@ import 'package:flutterallinone/widget/article_holder_widget.dart';
 import 'package:flutterallinone/pages/leader_page.dart';
 import 'package:flutterallinone/widget/over_scroll.dart';
 
+import 'article_page.dart';
+
 ///方案三 PageView实现，可滚动需要对Tab进行mixin
 class HomePageScroll extends StatefulWidget {
   HomePageScroll({Key key}) : super(key: key);
@@ -25,8 +27,8 @@ class _HomePageScrollState extends State<HomePageScroll> {
   int _tabIndex;
   var _pageController;
   final pages = <Widget>[
-    new LeaderPageWidget(),
-    Container(),
+    LeaderPageWidget(),
+    ArticlePageWidget(),
     Container(),
   ];
   void _pressLeft() {

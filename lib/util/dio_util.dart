@@ -54,7 +54,7 @@ class DioUtil {
       int code=linkedHashMap['errorCode'];
       String msg=linkedHashMap['errorMsg'];
       if(code==0){
-        successCallBack(response.data);
+        successCallBack(linkedHashMap['data']);
       }else{
         throw new BusinessError(code, msg);
       }

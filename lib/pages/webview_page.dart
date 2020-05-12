@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class ArticleDetailPage extends StatefulWidget{
+class CommonWebViewPage extends StatefulWidget{
   final String url;
 
-  const ArticleDetailPage(this.url,{Key key}) : super(key: key);
+  const CommonWebViewPage(this.url,{Key key}) : super(key: key);
   @override
-  _ArticleDetailState createState() {
+  _CommonWebViewPageState createState() {
     // TODO: implement createState
-    return _ArticleDetailState();
+    return _CommonWebViewPageState();
   }
 }
 
-class _ArticleDetailState extends State<ArticleDetailPage>{
+class _CommonWebViewPageState extends State<CommonWebViewPage>{
 
   @override
   Widget build(BuildContext context) {

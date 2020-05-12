@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterallinone/data/model/pojos.dart';
-import 'package:flutterallinone/pages/article_detail_page.dart';
+import 'package:flutterallinone/pages/webview_page.dart';
 import 'package:flutterallinone/repository/repository.dart';
 import 'package:flutterallinone/util/dio_util.dart';
 import 'package:flutterallinone/widget/over_scroll.dart';
@@ -84,7 +84,7 @@ class _ArticleHolderState extends State<ArticleHolderWidget> {
 
   void _tapArticle(SingleArticle itemData) {
     Navigator.push(context, new MaterialPageRoute(builder: (context) {
-      return ArticleDetailPage(itemData.link);
+      return CommonWebViewPage(itemData.link);
     }));
   }
 }

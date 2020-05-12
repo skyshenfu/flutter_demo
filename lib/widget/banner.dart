@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutterallinone/data/model/pojos.dart';
+import 'package:flutterallinone/pages/webview_page.dart';
 
 import 'indicator_painter.dart';
 
@@ -60,9 +61,14 @@ class _BannerWidgetState extends State<BannerWidget>{
   }
 
   Widget _getPage(SingleBanner banner) {
-    return Image.network(
-      banner.imagePath,
-      fit: BoxFit.fitWidth,
+    return GestureDetector(
+      onTap: (){
+        _tapBanner(banner);
+      },
+      child: Image.network(
+        banner.imagePath,
+        fit: BoxFit.fitWidth,
+      )
     );
   }
 
@@ -111,6 +117,11 @@ class _BannerWidgetState extends State<BannerWidget>{
     _pageController.dispose();
     // TODO: implement dispose
     super.dispose();
+  }
+  void _tapBanner(SingleBanner banner) {
+    Navigator.push(context, new MaterialPageRoute(builder: (context) {
+      return CommonWebViewPage(banner.url);
+    }));
   }
 }
 
