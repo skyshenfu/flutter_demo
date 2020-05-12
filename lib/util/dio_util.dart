@@ -81,7 +81,7 @@ class DioUtil {
       String msg=linkedHashMap['errorMsg'];
 
       if(code==0){
-        return Future.value(rawDataConvert(response.data));
+        return Future.value(rawDataConvert(linkedHashMap['data']));
       }else{
         throw new BusinessError(code, msg);
       }

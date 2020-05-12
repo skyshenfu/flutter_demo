@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterallinone/data/config/api.dart';
-import 'package:flutterallinone/data/config/response_raw.dart';
+import 'package:flutterallinone/repository/repository.dart';
 import 'package:flutterallinone/widget/article_holder_widget.dart';
-import 'package:flutterallinone/util/dio_util.dart';
 import 'package:flutterallinone/widget/banner.dart';
 
 class LeaderPageWidget extends StatefulWidget {
@@ -26,10 +22,7 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget>
     // TODO: implement initState
     super.initState();
     cancelToken = CancelToken();
-    _future=DioUtil.getInstance().futureRequest(Api.BANNER,
-            (bannerResponse) {
-          return BannerResponse.fromJson(bannerResponse);
-        });
+    _future = APIRepository.getInstance().getBannersFuture(cancelToken:cancelToken);
   }
 
   @override
@@ -41,14 +34,8 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget>
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              FutureBuilder(
-                builder: _futureBuilder,
-                future: _future
-              ),
-              Expanded(
-                flex: 1,
-                child: ArticleHolderWidget()
-              )
+              FutureBuilder(builder: _futureBuilder, future: _future),
+              Expanded(flex: 1, child: ArticleHolderWidget())
             ],
           ),
         ));
@@ -60,22 +47,7 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget>
     cancelToken.cancel();
     super.dispose();
   }
-//  void _requestData() {
-//
-//    DioUtil.getInstance().getRequest(Api.BANNER,cancelToken: cancelToken,successCallBack:_printV,errorCallBack: error1);
-//  }
 
-  error1(e) {
-    print("");
-  }
-
-//  void _printV(dynamic v) {
-//    BannerResponse data =BannerResponse.fromJson(v);
-//    setState(() {
-//      this.banners=data.data;
-//    });
-//
-//  }
 
   @override
   // TODO: implement wantKeepAlive
@@ -90,12 +62,12 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget>
           return Text(snapshot.error.toString());
         } else {
           return BannerWidget(
-            banners: snapshot.data.data,
+            banners: snapshot.data,
           );
         }
         break;
       default:
-        return Container(width: 0.0,height: 0.0);
+        return Container(width: 0.0, height: 0.0);
     }
   }
 }

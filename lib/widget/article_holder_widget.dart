@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterallinone/data/config/response_raw.dart';
 import 'package:flutterallinone/data/model/pojos.dart';
 import 'package:flutterallinone/pages/article_detail_page.dart';
+import 'package:flutterallinone/repository/repository.dart';
 import 'package:flutterallinone/util/dio_util.dart';
 import 'package:flutterallinone/widget/over_scroll.dart';
 
@@ -16,13 +16,20 @@ class ArticleHolderWidget extends StatefulWidget {
 
 class _ArticleHolderState extends State<ArticleHolderWidget> {
   Future _future;
+  CommonPageData _commonPageData;
   @override
   void initState() {
     super.initState();
-    this._future = DioUtil.getInstance().futureRequest("/article/list/1/json",
-        (rawDataConvert) {
-      return ArticleListResponse.fromJson(rawDataConvert);
-    });
+//    this._future = DioUtil.getInstance().futureRequest("/article/list/1/json",
+//        (pageData) {
+//          List<SingleArticle> articles = [];
+//          _commonPageData=CommonPageData.fromJson(pageData);
+//          pageData['datas'].forEach((v) {
+//            articles.add(SingleArticle.fromJson(v));
+//          });
+//          return articles;
+//    });
+    this._future=APIRepository.getInstance().getArticleFuture(0,page: _commonPageData);
   }
 
   @override
@@ -39,7 +46,7 @@ class _ArticleHolderState extends State<ArticleHolderWidget> {
           return Text("加载错误");
         } else {
           List<SingleArticle> listData = [];
-          listData = snapshot.data.data.datas;
+          listData = snapshot.data;
           return ScrollConfiguration(
               behavior: OverScrollBehavior(),
               child: ListView.builder(

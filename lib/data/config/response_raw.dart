@@ -18,25 +18,3 @@ class RawResponse {
     return data;
   }
 }
-
-class BannerResponse extends RawResponse {
-  List<SingleBanner> data;
-
-  BannerResponse(this.data);
-  BannerResponse.fromJson(Map<String, dynamic> json) {
-    var temp = json['data'];
-    if (temp is List) {
-      data = new List();
-      temp.forEach((v) {
-        data.add(new SingleBanner.fromJson(v));
-      });
-    }
-  }
-}
-class ArticleListResponse extends RawResponse{
-  PageData data;
-  ArticleListResponse(this.data);
-  ArticleListResponse.fromJson(Map<String, dynamic> json) {
-    data = PageData.fromJson(json['data']);
-  }
-}
