@@ -20,7 +20,7 @@ class HomePageScroll extends StatefulWidget {
   _HomePageScrollState createState() => _HomePageScrollState();
 }
 
-class _HomePageScrollState extends State<HomePageScroll>   with AutomaticKeepAliveClientMixin<HomePageScroll> {
+class _HomePageScrollState extends State<HomePageScroll> {
   final titleStr = "PageView实现，可滚动";
   int _tabIndex;
   var _pageController;
@@ -61,10 +61,8 @@ class _HomePageScrollState extends State<HomePageScroll>   with AutomaticKeepAli
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.adb), title: Text("tab1")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add_a_photo), title: Text("tab2")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.description), title: Text("tab3"))
+          BottomNavigationBarItem(icon: Icon(Icons.add_a_photo), title: Text("tab2")),
+          BottomNavigationBarItem(icon: Icon(Icons.description), title: Text("tab3"))
         ],
         //tab选中颜色
         fixedColor: Colors.lightBlue,
@@ -89,8 +87,4 @@ class _HomePageScrollState extends State<HomePageScroll>   with AutomaticKeepAli
       this._tabIndex = value;
     });
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

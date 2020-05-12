@@ -20,11 +20,16 @@ class LeaderPageWidget extends StatefulWidget {
 class _LeaderPageWidgetState extends State<LeaderPageWidget>
     with AutomaticKeepAliveClientMixin<LeaderPageWidget> {
   CancelToken cancelToken;
+  Future _future;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     cancelToken = CancelToken();
+    _future=DioUtil.getInstance().futureRequest(Api.BANNER,
+            (bannerResponse) {
+          return BannerResponse.fromJson(bannerResponse);
+        });
   }
 
   @override
@@ -38,10 +43,7 @@ class _LeaderPageWidgetState extends State<LeaderPageWidget>
             children: <Widget>[
               FutureBuilder(
                 builder: _futureBuilder,
-                future: DioUtil.getInstance().futureRequest(Api.BANNER,
-                    (bannerResponse) {
-                  return BannerResponse.fromJson(bannerResponse);
-                }),
+                future: _future
               ),
               Expanded(
                 flex: 1,
