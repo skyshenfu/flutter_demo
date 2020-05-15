@@ -61,9 +61,14 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     buildTypes {
         release {
+            minifyEnabled false
+            shrinkResources false
             // 替换成 release
             signingConfig signingConfigs.release
         }
