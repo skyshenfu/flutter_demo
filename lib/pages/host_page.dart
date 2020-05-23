@@ -4,6 +4,7 @@ import 'package:flutterallinone/pages/leader_page.dart';
 import 'package:flutterallinone/widget/over_scroll.dart';
 
 import 'article_page.dart';
+import 'bloc_demo_page.dart';
 
 ///方案三 PageView实现，可滚动需要对Tab进行mixin
 class HomePageScroll extends StatefulWidget {
@@ -29,7 +30,7 @@ class _HomePageScrollState extends State<HomePageScroll> {
   final pages = <Widget>[
     LeaderPageWidget(),
     ArticlePageWidget(),
-    Container(),
+    BLoCDemoPage(),
   ];
   void _pressLeft() {
     print("点击第一按钮");

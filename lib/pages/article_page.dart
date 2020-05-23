@@ -2,10 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterallinone/data/model/pojos.dart';
-import 'package:flutterallinone/repository/repository.dart';
 import 'package:flutterallinone/util/dio_util.dart';
-import 'package:flutterallinone/widget/article_holder_widget.dart';
-import 'package:flutterallinone/widget/banner.dart';
 import 'package:flutterallinone/widget/over_scroll.dart';
 
 import 'webview_page.dart';
@@ -153,13 +150,13 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget>
       return Center(
         child: Text("加载中"),
       );
-    }else  if (_load_more_status == 3) {
+    } else if (_load_more_status == 3) {
       return Center(
         child: Text("没有更多"),
       );
-    }else {
+    } else {
       return Center(
-        child: Text("目前"+this._articles.length.toString()+"条"),
+        child: Text("目前" + this._articles.length.toString() + "条"),
       );
     }
   }
